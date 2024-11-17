@@ -1,0 +1,26 @@
+{
+  "os":  "Linux-6.1.85+-x86_64-with-glibc2.35",
+  "python":  "3.10.12",
+  "startedAt":  "2024-11-05T17:16:55.017709Z",
+  "program":  "-m scripts.train_lpl",
+  "email":  "rishabh.bhattacharya@research.iiit.ac.in",
+  "root":  "/content/neural_cognitive_modeling_project",
+  "host":  "3f74fc04dc58",
+  "username":  "root",
+  "executable":  "/usr/bin/python3",
+  "cpu_count":  1,
+  "cpu_count_logical":  2,
+  "disk":  {
+    "/":  {
+      "total":  "115658190848",
+      "used":  "34972028928"
+    }
+  },
+  "memory":  {
+    "total":  "13609422848"
+  },
+  "cpu":  {
+    "count":  1,
+    "countLogical":  2
+  }
+}

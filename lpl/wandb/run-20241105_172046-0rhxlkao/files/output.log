@@ -1,0 +1,10 @@
+                                              
+Epoch 1 - Average Loss: 0.1646
+Test set: Average loss: 0.0573, Accuracy: 9816/10000 (98.16%)
+Epoch 2 - Average Loss: 0.0485
+Test set: Average loss: 0.0514, Accuracy: 9836/10000 (98.36%)
+Epoch 3 - Average Loss: 0.0303
+Test set: Average loss: 0.0373, Accuracy: 9877/10000 (98.77%)
+Epoch 4 - Average Loss: 0.0209
+Test set: Average loss: 0.0366, Accuracy: 9883/10000 (98.83%)
+Figure(1200x500)

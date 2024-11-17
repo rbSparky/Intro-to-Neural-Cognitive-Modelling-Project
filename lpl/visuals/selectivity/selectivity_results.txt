@@ -1,0 +1,2 @@
+Average Selectivity (Swap): 7.0768
+Average Selectivity (Nonswap): 10.3378

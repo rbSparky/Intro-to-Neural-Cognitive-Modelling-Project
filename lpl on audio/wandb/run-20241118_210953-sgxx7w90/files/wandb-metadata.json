@@ -1,0 +1,43 @@
+{
+  "os": "Linux-6.1.85+-x86_64-with-glibc2.35",
+  "python": "3.10.12",
+  "startedAt": "2024-11-18T21:09:53.284769Z",
+  "program": "/content/Intro-to-Neural-Cognitive-Modelling-Project/lpl on audio/train_lpl_speaker_identification.py",
+  "codePath": "lpl on audio/train_lpl_speaker_identification.py",
+  "git": {
+    "remote": "https://rbSparky:@github.com/rbSparky/Intro-to-Neural-Cognitive-Modelling-Project.git",
+    "commit": "e25709a7d0f31b086835d4628f1cf37244276b73"
+  },
+  "email": "rishabh.bhattacharya@research.iiit.ac.in",
+  "root": "/content/Intro-to-Neural-Cognitive-Modelling-Project/lpl on audio",
+  "host": "9f4c8bc8c1c8",
+  "username": "root",
+  "executable": "/usr/bin/python3",
+  "codePathLocal": "train_lpl_speaker_identification.py",
+  "cpu_count": 1,
+  "cpu_count_logical": 2,
+  "gpu": "Tesla T4",
+  "gpu_count": 1,
+  "disk": {
+    "/": {
+      "total": "120942624768",
+      "used": "49165672448"
+    }
+  },
+  "memory": {
+    "total": "13609431040"
+  },
+  "cpu": {
+    "count": 1,
+    "countLogical": 2
+  },
+  "gpu_nvidia": [
+    {
+      "name": "Tesla T4",
+      "memoryTotal": "16106127360",
+      "cudaCores": 2560,
+      "architecture": "Turing"
+    }
+  ],
+  "cudaVersion": "12.2"
+}

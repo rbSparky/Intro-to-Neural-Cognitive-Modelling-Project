@@ -1,0 +1,11 @@
+Using device: cuda
+Traceback (most recent call last):
+  File "/content/Intro-to-Neural-Cognitive-Modelling-Project/lpl on audio/train_lpl_speaker_identification.py", line 200, in <module>
+    main()
+  File "/content/Intro-to-Neural-Cognitive-Modelling-Project/lpl on audio/train_lpl_speaker_identification.py", line 102, in main
+    train_dataset = LibriSpeechSpeaker(
+  File "/content/Intro-to-Neural-Cognitive-Modelling-Project/lpl on audio/datasets/librispeech_speaker.py", line 17, in __init__
+    self.dataset = torchaudio.datasets.LIBRISPEECH(root, url=url, download=download)
+  File "/usr/local/lib/python3.10/dist-packages/torchaudio/datasets/librispeech.py", line 115, in __init__
+    raise RuntimeError(
+RuntimeError: Dataset not found at /content/librispeech-clean/LibriSpeech/train-clean-100. Please set `download=True` to download the dataset.

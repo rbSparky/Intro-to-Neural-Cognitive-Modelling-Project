@@ -1,0 +1,11 @@
+Using device: cuda
+Traceback (most recent call last):
+  File "/content/Intro-to-Neural-Cognitive-Modelling-Project/lpl on audio/train_lpl_speaker_identification.py", line 200, in <module>
+    main()
+  File "/content/Intro-to-Neural-Cognitive-Modelling-Project/lpl on audio/train_lpl_speaker_identification.py", line 102, in main
+    train_dataset = LibriSpeechSpeaker(
+  File "/content/Intro-to-Neural-Cognitive-Modelling-Project/lpl on audio/datasets/librispeech_speaker.py", line 19, in __init__
+    self.speaker_to_class = self._create_speaker_mapping()
+  File "/content/Intro-to-Neural-Cognitive-Modelling-Project/lpl on audio/datasets/librispeech_speaker.py", line 23, in _create_speaker_mapping
+    for _, _, speaker_id, _ in self.dataset:
+ValueError: too many values to unpack (expected 4)

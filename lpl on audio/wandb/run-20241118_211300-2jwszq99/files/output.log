@@ -1,0 +1,11 @@
+Using device: cuda
+Traceback (most recent call last):            
+Epoch 1 - Average Loss: 5.5373
+Test set: Average loss: 5.5184, Accuracy: 0/2620 (0.00%)
+  File "/content/Intro-to-Neural-Cognitive-Modelling-Project/lpl on audio/train_lpl_speaker_identification.py", line 200, in <module>
+    main()
+  File "/content/Intro-to-Neural-Cognitive-Modelling-Project/lpl on audio/train_lpl_speaker_identification.py", line 158, in main
+    learning_rule.update_weights(x_flat, y_pred, y_true)
+  File "/content/Intro-to-Neural-Cognitive-Modelling-Project/lpl on audio/models/learning_rules.py", line 46, in update_weights
+    raise ValueError(f"Shape mismatch for {name}: expected {param.shape}, got {delta_w.shape}")
+ValueError: Shape mismatch for fc2.weight: expected torch.Size([251, 256]), got torch.Size([8192, 251])

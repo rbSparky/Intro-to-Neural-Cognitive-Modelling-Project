@@ -1,0 +1,31 @@
+Using device: cpu
+/usr/local/lib/python3.10/dist-packages/torch/utils/data/dataloader.py:617: UserWarning: This DataLoader will create 4 worker processes in total. Our suggested max number of worker in current system is 2, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+Traceback (most recent call last):           
+  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/content/Intro-to-Neural-Cognitive-Modelling-Project/lpl/scripts/train_lpl_speaker_identification.py", line 164, in <module>
+    main()
+  File "/content/Intro-to-Neural-Cognitive-Modelling-Project/lpl/scripts/train_lpl_speaker_identification.py", line 119, in main
+    train_loss = train_lpl(model, learning_rule, device, train_loader, optimizer, epoch)
+  File "/content/Intro-to-Neural-Cognitive-Modelling-Project/lpl/scripts/train_lpl_speaker_identification.py", line 23, in train_lpl
+    x_flat, output = model(data)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1844, in _call_impl
+    return inner()
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1790, in inner
+    result = forward_call(*args, **kwargs)
+  File "/content/Intro-to-Neural-Cognitive-Modelling-Project/lpl/models/cnn_model.py", line 41, in forward
+    x = self.pool(F.relu(self.conv1(x)))  # [batch, 32, 32, 32]
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/conv.py", line 554, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/conv.py", line 549, in _conv_forward
+    return F.conv2d(
+KeyboardInterrupt

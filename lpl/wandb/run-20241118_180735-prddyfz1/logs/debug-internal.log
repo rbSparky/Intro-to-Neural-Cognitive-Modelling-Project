@@ -1,0 +1,18 @@
+{"time":"2024-11-18T18:07:35.161210408Z","level":"INFO","msg":"using version","core version":"0.18.6"}
+{"time":"2024-11-18T18:07:35.161262067Z","level":"INFO","msg":"created symlink","path":"/content/Intro-to-Neural-Cognitive-Modelling-Project/lpl/wandb/run-20241118_180735-prddyfz1/logs/debug-core.log"}
+{"time":"2024-11-18T18:07:35.265270457Z","level":"INFO","msg":"created new stream","id":"prddyfz1"}
+{"time":"2024-11-18T18:07:35.265329135Z","level":"INFO","msg":"stream: started","id":"prddyfz1"}
+{"time":"2024-11-18T18:07:35.265356964Z","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"prddyfz1"}}
+{"time":"2024-11-18T18:07:35.265660511Z","level":"INFO","msg":"handler: started","stream_id":{"value":"prddyfz1"}}
+{"time":"2024-11-18T18:07:35.265691147Z","level":"INFO","msg":"sender: started","stream_id":"prddyfz1"}
+{"time":"2024-11-18T18:07:35.617945509Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-18T18:12:44.695505103Z","level":"INFO","msg":"stream: closing","id":"prddyfz1"}
+{"time":"2024-11-18T18:12:44.695757769Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-18T18:12:44.697312582Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-18T18:12:44.924623139Z","level":"WARN","msg":"No program path found, not creating job artifact. See https://docs.wandb.ai/guides/launch/create-job"}
+{"time":"2024-11-18T18:12:44.924655123Z","level":"INFO","msg":"sender: sendDefer: no job artifact to save"}
+{"time":"2024-11-18T18:12:46.121515311Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-18T18:12:46.352298745Z","level":"INFO","msg":"handler: closed","stream_id":{"value":"prddyfz1"}}
+{"time":"2024-11-18T18:12:46.352375377Z","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"prddyfz1"}}
+{"time":"2024-11-18T18:12:46.35248462Z","level":"INFO","msg":"sender: closed","stream_id":"prddyfz1"}
+{"time":"2024-11-18T18:12:46.352514716Z","level":"INFO","msg":"stream: closed","id":"prddyfz1"}

@@ -1,0 +1,30 @@
+{
+  "os": "Linux-6.1.85+-x86_64-with-glibc2.35",
+  "python": "3.10.12",
+  "startedAt": "2024-11-18T17:57:13.427068Z",
+  "program": "-m scripts.train_lpl_librispeech",
+  "git": {
+    "remote": "https://rbSparky:@github.com/rbSparky/Intro-to-Neural-Cognitive-Modelling-Project.git",
+    "commit": "cc1b0fe2289300116222d8ba859509c755019e32"
+  },
+  "email": "rishabh.bhattacharya@research.iiit.ac.in",
+  "root": "/content/Intro-to-Neural-Cognitive-Modelling-Project/lpl",
+  "host": "6555142250a9",
+  "username": "root",
+  "executable": "/usr/bin/python3",
+  "cpu_count": 1,
+  "cpu_count_logical": 2,
+  "disk": {
+    "/": {
+      "total": "115658190848",
+      "used": "62816296960"
+    }
+  },
+  "memory": {
+    "total": "13609431040"
+  },
+  "cpu": {
+    "count": 1,
+    "countLogical": 2
+  }
+}

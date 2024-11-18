@@ -1,12 +1,13 @@
-# train_lpl_librispeech.py
+# train_lpl_speaker_identification.py
 import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
 from models.cnn_model import SimpleCNN
 from models.learning_rules import LPLLearning
-from datasets.librispeech_phoneme import LibriSpeechPhoneme
+from datasets.librispeech_speaker import LibriSpeechSpeaker
 import torchaudio.transforms as T
+import torchvision.transforms as TT  # Import torchvision.transforms
 import matplotlib.pyplot as plt
 import os
 from tqdm import tqdm
@@ -54,10 +55,10 @@ def test(model, device, test_loader):
 def main():
     wandb.init(
         project="Neural_Cognitive_Modeling",
-        name="LPL_LibriSpeech_Training",
+        name="LPL_LibriSpeech_Speaker_Training",
         config={
             "learning_rate": 1e-3,
-            "epochs": 20,  # Increased epochs for better convergence
+            "epochs": 20,  # Adjust as needed
             "batch_size": 64,
             "alpha": 0.1,
             "beta": 0.01,
@@ -77,26 +78,21 @@ def main():
     print(f"Using device: {device}")
 
     # Define the feature extractor
-    transform = T.MelSpectrogram(sample_rate=16000, n_mels=128)
-    # Normalize the spectrogram
-    normalization = T.AmplitudeToDB()
-
-    # Combine transforms
-    composed_transform = T.Compose([
-        transform,
-        normalization,
-        T.Resize((64, 64))  # Resize to match CNN input dimensions
+    composed_transform = TT.Compose([
+        T.MelSpectrogram(sample_rate=16000, n_mels=64),  # Adjust n_mels as needed
+        T.AmplitudeToDB(),
+        TT.Resize((64, 64))  # Resize to match CNN input dimensions
     ])
 
     # Initialize datasets
-    train_dataset = LibriSpeechPhoneme(
-        root="/content/librispeech-clean",
+    train_dataset = LibriSpeechSpeaker(
+        root="/content/librispeech-clean/",
         url="train-clean-100",
         download=False,
         transform=composed_transform
     )
-    test_dataset = LibriSpeechPhoneme(
-        root="/content/librispeech-clean",
+    test_dataset = LibriSpeechSpeaker(
+        root="/content/librispeech-clean/",
         url="test-clean",
         download=False,
         transform=composed_transform
@@ -107,11 +103,12 @@ def main():
     test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=4)
 
     # Initialize model
-    model = SimpleCNN(input_channels=1, num_classes=41).to(device)
+    num_classes = len(train_dataset.speaker_to_class)
+    model = SimpleCNN(input_channels=1, num_classes=num_classes).to(device)
     
     # Calculate input_dim for LPLLearning based on CNN architecture
     input_dim = 64 * 16 * 16  # 64 channels * 16 height * 16 width
-    learning_rule = LPLLearning(input_dim=input_dim, output_dim=41, lr=learning_rate, alpha=alpha, beta=beta)
+    learning_rule = LPLLearning(input_dim=input_dim, output_dim=num_classes, lr=learning_rate, alpha=alpha, beta=beta)
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
     wandb.watch(model, log="all")
@@ -133,7 +130,7 @@ def main():
 
     # Save the trained model
     os.makedirs('models/saved', exist_ok=True)
-    model_path = 'models/saved/cnn_lpl_librispeech.pth'
+    model_path = 'models/saved/cnn_lpl_librispeech_speaker.pth'
     torch.save(model.state_dict(), model_path)
     wandb.save(model_path)
 
@@ -155,7 +152,7 @@ def main():
 
     plt.tight_layout()
     os.makedirs('visuals/accuracy_plots', exist_ok=True)
-    plot_path = 'visuals/accuracy_plots/lpl_librispeech_training.png'
+    plot_path = 'visuals/accuracy_plots/lpl_librispeech_speaker_training.png'
     plt.savefig(plot_path)
     plt.show()
 

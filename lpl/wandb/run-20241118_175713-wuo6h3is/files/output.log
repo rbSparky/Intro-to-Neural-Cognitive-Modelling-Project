@@ -1,0 +1,15 @@
+Using device: cpu
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/content/Intro-to-Neural-Cognitive-Modelling-Project/lpl/scripts/train_lpl_librispeech.py", line 163, in <module>
+    main()
+  File "/content/Intro-to-Neural-Cognitive-Modelling-Project/lpl/scripts/train_lpl_librispeech.py", line 88, in main
+    train_dataset = LibriSpeechPhoneme(
+  File "/content/Intro-to-Neural-Cognitive-Modelling-Project/lpl/datasets/librispeech_phoneme.py", line 19, in __init__
+    self.labels = self.load_labels(os.path.join(root, 'phoneme_labels', f'{url}_labels.csv'))
+  File "/content/Intro-to-Neural-Cognitive-Modelling-Project/lpl/datasets/librispeech_phoneme.py", line 23, in load_labels
+    with open(csv_path, 'r') as f:
+FileNotFoundError: [Errno 2] No such file or directory: '/content/librispeech-clean/phoneme_labels/train-clean-100_labels.csv'

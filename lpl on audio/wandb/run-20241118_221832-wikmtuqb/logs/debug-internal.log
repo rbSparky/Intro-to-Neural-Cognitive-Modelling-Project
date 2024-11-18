@@ -1,0 +1,16 @@
+{"time":"2024-11-18T22:18:32.909140577Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-11-18T22:18:32.909164706Z","level":"INFO","msg":"created symlink","path":"/content/Intro-to-Neural-Cognitive-Modelling-Project/lpl on audio/wandb/run-20241118_221832-wikmtuqb/logs/debug-core.log"}
+{"time":"2024-11-18T22:18:33.012278571Z","level":"INFO","msg":"created new stream","id":"wikmtuqb"}
+{"time":"2024-11-18T22:18:33.012318521Z","level":"INFO","msg":"stream: started","id":"wikmtuqb"}
+{"time":"2024-11-18T22:18:33.012349361Z","level":"INFO","msg":"writer: Do: started","stream_id":"wikmtuqb"}
+{"time":"2024-11-18T22:18:33.012512015Z","level":"INFO","msg":"handler: started","stream_id":"wikmtuqb"}
+{"time":"2024-11-18T22:18:33.01253961Z","level":"INFO","msg":"sender: started","stream_id":"wikmtuqb"}
+{"time":"2024-11-18T22:18:33.209478889Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-18T22:21:39.388148504Z","level":"INFO","msg":"stream: closing","id":"wikmtuqb"}
+{"time":"2024-11-18T22:21:39.388276898Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-18T22:21:39.389569342Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-18T22:21:41.174353969Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-18T22:21:41.293280462Z","level":"INFO","msg":"handler: closed","stream_id":"wikmtuqb"}
+{"time":"2024-11-18T22:21:41.293344101Z","level":"INFO","msg":"sender: closed","stream_id":"wikmtuqb"}
+{"time":"2024-11-18T22:21:41.293313234Z","level":"INFO","msg":"writer: Close: closed","stream_id":"wikmtuqb"}
+{"time":"2024-11-18T22:21:41.293440609Z","level":"INFO","msg":"stream: closed","id":"wikmtuqb"}

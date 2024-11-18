@@ -1,0 +1,53 @@
+Using device: cuda
+Training Samples: 517
+Testing Samples: 275
+Number of Classes (Speakers): 5
+Error in sys.excepthook:                  
+Epoch 1 - Average Loss: 0.3059
+Test set: Average loss: 8.6619, Accuracy: 73/275 (26.55%)
+Epoch 2 - Average Loss: 0.0269
+Test set: Average loss: 43.2835, Accuracy: 47/275 (17.09%)
+Epoch 3 - Average Loss: 0.1226
+Test set: Average loss: 91.2841, Accuracy: 44/275 (16.00%)
+Epoch 4 - Average Loss: 0.6227
+Test set: Average loss: 1952.0377, Accuracy: 41/275 (14.91%)
+Epoch 5 - Average Loss: 14.1183
+Test set: Average loss: 75121.3864, Accuracy: 41/275 (14.91%)
+Epoch 6 - Average Loss: 83.0107
+Test set: Average loss: 76656.4600, Accuracy: 41/275 (14.91%)
+Epoch 7 - Average Loss: 17.0007
+Test set: Average loss: 159955.0218, Accuracy: 41/275 (14.91%)
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/wandb/sdk/lib/exit_hooks.py", line 52, in exc_handler
+    traceback.print_exception(exc_type, exc, tb)
+  File "/usr/lib/python3.10/traceback.py", line 119, in print_exception
+    te = TracebackException(type(value), value, tb, limit=limit, compact=True)
+  File "/usr/lib/python3.10/traceback.py", line 502, in __init__
+    self.stack = StackSummary.extract(
+  File "/usr/lib/python3.10/traceback.py", line 383, in extract
+    f.line
+  File "/usr/lib/python3.10/traceback.py", line 306, in line
+    self._line = linecache.getline(self.filename, self.lineno)
+  File "/usr/lib/python3.10/linecache.py", line 26, in getline
+    def getline(filename, lineno, module_globals=None):
+KeyboardInterrupt
+
+Original exception was:
+Traceback (most recent call last):
+  File "/content/Intro-to-Neural-Cognitive-Modelling-Project/lpl on audio/train_lpl_speaker_identification.py", line 218, in <module>
+    main()
+  File "/content/Intro-to-Neural-Cognitive-Modelling-Project/lpl on audio/train_lpl_speaker_identification.py", line 163, in main
+    for data, target in train_loader:
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/data/dataloader.py", line 701, in __next__
+    data = self._next_data()
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/data/dataloader.py", line 1448, in _next_data
+    idx, data = self._get_data()
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/data/dataloader.py", line 1402, in _get_data
+    success, data = self._try_get_data()
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/data/dataloader.py", line 1243, in _try_get_data
+    data = self._data_queue.get(timeout=timeout)
+  File "/usr/lib/python3.10/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/usr/lib/python3.10/threading.py", line 324, in wait
+    gotit = waiter.acquire(True, timeout)
+KeyboardInterrupt

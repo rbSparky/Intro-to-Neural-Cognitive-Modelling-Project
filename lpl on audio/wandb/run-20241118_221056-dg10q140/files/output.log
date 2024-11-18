@@ -1,0 +1,12 @@
+Using device: cuda
+Training Samples: 517
+Testing Samples: 275
+Number of Classes (Speakers): 5
+Traceback (most recent call last):
+  File "/content/Intro-to-Neural-Cognitive-Modelling-Project/lpl on audio/train_lpl_speaker_identification.py", line 218, in <module>
+    main()
+  File "/content/Intro-to-Neural-Cognitive-Modelling-Project/lpl on audio/train_lpl_speaker_identification.py", line 146, in main
+    input_dim = model.resnet.fc.in_features  # Typically 512 for ResNet-18
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1931, in __getattr__
+    raise AttributeError(
+AttributeError: 'SimpleCNN' object has no attribute 'resnet'

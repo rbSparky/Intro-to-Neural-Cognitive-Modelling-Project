@@ -1,13 +1,12 @@
-# train_lpl_speaker_identification.py
 import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
-from models.cnn_model import ResNetSpeaker  # Updated model
+from models.simple_cnn import SimpleCNN
 from models.learning_rules import LPLLearning
 from datasets.librispeech_speaker import LibriSpeechSpeaker
 import torchaudio.transforms as T
-import torchvision.transforms as TT  # Import torchvision.transforms
+import torchvision.transforms as TT
 import matplotlib.pyplot as plt
 import os
 from tqdm import tqdm
@@ -21,7 +20,7 @@ def train(model, device, train_loader, optimizer, epoch):
     for data, target in tqdm(train_loader, desc=f"Epoch {epoch}", leave=False):
         data, target = data.to(device), target.to(device)
         optimizer.zero_grad()
-        representation, output = model(data)  # Get representation and output
+        output = model(data)
         loss = criterion(output, target)
         loss.backward()
         optimizer.step()
@@ -34,14 +33,14 @@ def test(model, device, test_loader):
     model.eval()
     test_loss = 0
     correct = 0
-    criterion = nn.CrossEntropyLoss(reduction='sum')  # Sum to calculate average
+    criterion = nn.CrossEntropyLoss(reduction='sum')
     with torch.no_grad():
         for data, target in tqdm(test_loader, desc="Testing", leave=False):
             data, target = data.to(device), target.to(device)
-            representation, output = model(data)  # Get representation and output
+            output = model(data)
             loss = criterion(output, target)
             test_loss += loss.item()
-            pred = output.argmax(dim=1, keepdim=True)  # Get the index of the max log-probability
+            pred = output.argmax(dim=1, keepdim=True)
             correct += pred.eq(target.view_as(pred)).sum().item()
     test_loss /= len(test_loader.dataset)
     accuracy = 100. * correct / len(test_loader.dataset)
@@ -49,18 +48,19 @@ def test(model, device, test_loader):
     return test_loss, accuracy
 
 def main():
-    # Initialize Weights & Biases
     wandb.init(
         project="Neural_Cognitive_Modeling",
-        name="LPL_LibriSpeech_Speaker_Training",
+        name="LPL_LibriSpeech_Speaker_Training_Simplified",
         config={
             "learning_rate": 1e-3,
-            "epochs": 50,  # Increased epochs for better learning
-            "batch_size": 64,
-            "alpha": 0.05,  # Adjusted alpha
-            "beta": 0.005,   # Adjusted beta
-            "model": "ResNetSpeaker",
+            "epochs": 50,
+            "batch_size": 32,
+            "alpha": 0.01,
+            "beta": 0.001,
+            "model": "SimpleCNN",
             "learning_rule": "LPL",
+            "num_speakers": 5,
+            "weight_decay": 1e-4
         }
     )
     config = wandb.config
@@ -70,11 +70,12 @@ def main():
     learning_rate = config.learning_rate
     alpha = config.alpha
     beta = config.beta
+    num_speakers = config.num_speakers
+    weight_decay = config.weight_decay
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
 
-    # Set random seeds for reproducibility (optional but recommended)
     import random
     import numpy as np
 
@@ -89,56 +90,42 @@ def main():
 
     set_seed()
 
-    # Define the feature extractor
     composed_transform = TT.Compose([
-        T.MelSpectrogram(sample_rate=16000, n_mels=64),  # Adjust n_mels as needed
+        T.MelSpectrogram(sample_rate=16000, n_mels=64),
         T.AmplitudeToDB(),
-        TT.Resize((224, 224)),  # Resize to match ResNet input dimensions (224x224)
-        # Normalize using ImageNet mean and std as ResNet was pretrained on ImageNet
-        TT.Normalize(mean=[-80.0], std=[10.0])  # Example values; adjust based on data
+        TT.Resize((224, 224)),
+        TT.Normalize(mean=[0.485], std=[0.229]),
     ])
 
-    # Initialize datasets
     train_dataset = LibriSpeechSpeaker(
         root="/content/librispeech-clean/",
         url="train-clean-100",
         download=False,
-        transform=composed_transform
+        transform=composed_transform,
+        max_speakers=num_speakers
     )
     test_dataset = LibriSpeechSpeaker(
         root="/content/librispeech-clean/",
         url="test-clean",
         download=False,
-        transform=composed_transform
+        transform=composed_transform,
+        max_speakers=num_speakers
     )
 
-    # Initialize data loaders
-    # Set num_workers=2 to adhere to the system's recommendation
-    # Set pin_memory=True for faster data transfer to GPU
+    print(f"Training Samples: {len(train_dataset)}")
+    print(f"Testing Samples: {len(test_dataset)}")
+    print(f"Number of Classes (Speakers): {len(train_dataset.speaker_to_class)}")
+
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=2, pin_memory=True)
     test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=2, pin_memory=True)
 
-    # Initialize model
     num_classes = len(train_dataset.speaker_to_class)
-    model = ResNetSpeaker(num_classes=num_classes).to(device)
+    model = SimpleCNN(num_classes=num_classes).to(device)
 
-    # Separate the final layer's parameters
-    final_layer_params = []
-    other_params = []
-    for name, param in model.named_parameters():
-        if 'fc.weight' in name or 'fc.bias' in name:
-            final_layer_params.append(param)
-        else:
-            other_params.append(param)
+    optimizer = optim.Adam(model.parameters(), lr=learning_rate, weight_decay=weight_decay)
 
-    # Initialize optimizer for all parameters except the final layer
-    optimizer = optim.Adam(other_params, lr=learning_rate)
-
-    # Initialize LPL Learning Rule with correct input_dim
-    input_dim = model.resnet.fc.in_features  # Typically 512 for ResNet-18
     learning_rule = LPLLearning(model=model, device=device, lr=learning_rate, alpha=alpha, beta=beta)
 
-    # Watch the model with Weights & Biases
     wandb.watch(model, log="all")
 
     train_losses = []
@@ -149,14 +136,14 @@ def main():
         train_losses.append(train_loss)
         test_accuracies.append(accuracy)
 
-        # Apply LPL Learning Rule to update final layer
         with torch.no_grad():
-            # Iterate through the entire training set to update weights
             for data, target in train_loader:
                 data, target = data.to(device), target.to(device)
-                representation, y_pred = model(data)
+                output = model(data)
+                features = model.fc1(F.relu(model.conv1(data)))
+                y_pred = output
                 y_true = F.one_hot(target, num_classes=num_classes).float()
-                learning_rule.update_weights(representation, y_pred, y_true)
+                learning_rule.update_weights(features, y_pred, y_true)
 
         wandb.log({
             "Epoch": epoch,
@@ -165,22 +152,19 @@ def main():
             "Test Accuracy": accuracy
         })
 
-        # Log weight statistics for the final layer
         for name, param in model.named_parameters():
-            if 'fc.weight' in name or 'fc.bias' in name:
+            if 'fc2.weight' in name or 'fc2.bias' in name:
                 wandb.log({
                     f"{name}_mean": param.data.mean().item(),
-                    f"{name}_std": param.data.std().item()
+                    f"{name}_std": param.data.std().item(),
+                    f"{name}_hist": wandb.Histogram(param.data.cpu().numpy())
                 })
-                wandb.log({f"{name}_hist": wandb.Histogram(param.data.cpu().numpy())})
 
-    # Save the trained model
     os.makedirs('models/saved', exist_ok=True)
-    model_path = 'models/saved/resnet_lpl_librispeech_speaker.pth'
+    model_path = 'models/saved/simple_cnn_lpl_librispeech_speaker.pth'
     torch.save(model.state_dict(), model_path)
     wandb.save(model_path)
 
-    # Plot training loss and test accuracy
     plt.figure(figsize=(12,5))
     plt.subplot(1,2,1)
     plt.plot(range(1, epochs +1), train_losses, marker='o', label='Training Loss')
@@ -198,7 +182,7 @@ def main():
 
     plt.tight_layout()
     os.makedirs('visuals/accuracy_plots', exist_ok=True)
-    plot_path = 'visuals/accuracy_plots/resnet_lpl_librispeech_speaker_training.png'
+    plot_path = 'visuals/accuracy_plots/simple_cnn_lpl_librispeech_speaker_training.png'
     plt.savefig(plot_path)
     plt.show()
 

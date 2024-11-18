@@ -1,0 +1,16 @@
+{"time":"2024-11-18T21:50:07.132942448Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-11-18T21:50:07.132966708Z","level":"INFO","msg":"created symlink","path":"/content/Intro-to-Neural-Cognitive-Modelling-Project/lpl on audio/wandb/run-20241118_215007-iu9q1m0p/logs/debug-core.log"}
+{"time":"2024-11-18T21:50:07.235697427Z","level":"INFO","msg":"created new stream","id":"iu9q1m0p"}
+{"time":"2024-11-18T21:50:07.235734301Z","level":"INFO","msg":"stream: started","id":"iu9q1m0p"}
+{"time":"2024-11-18T21:50:07.235751284Z","level":"INFO","msg":"writer: Do: started","stream_id":"iu9q1m0p"}
+{"time":"2024-11-18T21:50:07.23591119Z","level":"INFO","msg":"handler: started","stream_id":"iu9q1m0p"}
+{"time":"2024-11-18T21:50:07.235939311Z","level":"INFO","msg":"sender: started","stream_id":"iu9q1m0p"}
+{"time":"2024-11-18T21:50:07.44099187Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-18T21:58:06.648271066Z","level":"INFO","msg":"stream: closing","id":"iu9q1m0p"}
+{"time":"2024-11-18T21:58:06.648481203Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-18T21:58:06.649894643Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-18T21:58:08.41976936Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-18T21:58:08.512395134Z","level":"INFO","msg":"handler: closed","stream_id":"iu9q1m0p"}
+{"time":"2024-11-18T21:58:08.512430429Z","level":"INFO","msg":"writer: Close: closed","stream_id":"iu9q1m0p"}
+{"time":"2024-11-18T21:58:08.512502761Z","level":"INFO","msg":"sender: closed","stream_id":"iu9q1m0p"}
+{"time":"2024-11-18T21:58:08.512514992Z","level":"INFO","msg":"stream: closed","id":"iu9q1m0p"}

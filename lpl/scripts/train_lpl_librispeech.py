@@ -1,4 +1,3 @@
-# train_lpl_librispeech.py
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -7,7 +6,7 @@ from models.cnn_model import SimpleCNN
 from models.learning_rules import LPLLearning
 from datasets.librispeech_phoneme import LibriSpeechPhoneme
 import torchaudio.transforms as T
-import torchvision.transforms as TT  # Import torchvision.transforms
+import torchvision.transforms as TT 
 import matplotlib.pyplot as plt
 import os
 from tqdm import tqdm
@@ -58,7 +57,7 @@ def main():
         name="LPL_LibriSpeech_Training",
         config={
             "learning_rate": 1e-3,
-            "epochs": 20,  # Increased epochs for better convergence
+            "epochs": 20,  
             "batch_size": 64,
             "alpha": 0.1,
             "beta": 0.01,
@@ -77,14 +76,12 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
 
-    # Define the feature extractor
     composed_transform = TT.Compose([
-        T.MelSpectrogram(sample_rate=16000, n_mels=64),  # Reduced n_mels to 64
+        T.MelSpectrogram(sample_rate=16000, n_mels=64), 
         T.AmplitudeToDB(),
-        TT.Resize((64, 64))  # Resize to match CNN input dimensions
+        TT.Resize((64, 64))  
     ])
 
-    # Initialize datasets
     train_dataset = LibriSpeechPhoneme(
         root="/content/librispeech-clean/",
         url="train-clean-100",
@@ -98,15 +95,12 @@ def main():
         transform=composed_transform
     )
 
-    # Initialize data loaders
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=4)
     test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=4)
 
-    # Initialize model
     model = SimpleCNN(input_channels=1, num_classes=41).to(device)
     
-    # Calculate input_dim for LPLLearning based on CNN architecture
-    input_dim = 64 * 16 * 16  # 64 channels * 16 height * 16 width
+    input_dim = 64 * 16 * 16 
     learning_rule = LPLLearning(input_dim=input_dim, output_dim=41, lr=learning_rate, alpha=alpha, beta=beta)
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
@@ -127,13 +121,11 @@ def main():
             "Test Accuracy": accuracy
         })
 
-    # Save the trained model
     os.makedirs('models/saved', exist_ok=True)
     model_path = 'models/saved/cnn_lpl_librispeech.pth'
     torch.save(model.state_dict(), model_path)
     wandb.save(model_path)
 
-    # Plot training loss and test accuracy
     plt.figure(figsize=(12,5))
     plt.subplot(1,2,1)
     plt.plot(range(1, epochs +1), train_losses, marker='o', label='Training Loss')

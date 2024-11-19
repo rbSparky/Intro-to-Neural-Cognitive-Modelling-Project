@@ -1,4 +1,3 @@
-# visualize_librispeech.py
 import torch
 from torch.utils.data import DataLoader
 from models.cnn_model import SimpleCNN
@@ -36,7 +35,7 @@ def plot_tsne(representations, labels, title, save_path):
     tsne_results = tsne.fit_transform(representations)
 
     plt.figure(figsize=(10,8))
-    palette = sns.color_palette("hsv", 41)  # 41 distinct colors
+    palette = sns.color_palette("hsv", 41)  
     sns.scatterplot(x=tsne_results[:,0], y=tsne_results[:,1], hue=labels, palette=palette, legend='full', alpha=0.6, s=10)
     plt.title(title)
     plt.xlabel('t-SNE Dimension 1')
@@ -51,7 +50,7 @@ def plot_pca(representations, labels, title, save_path):
     pca_results = pca.fit_transform(representations)
 
     plt.figure(figsize=(10,8))
-    palette = sns.color_palette("hsv", 41)  # 41 distinct colors
+    palette = sns.color_palette("hsv", 41)  
     sns.scatterplot(x=pca_results[:,0], y=pca_results[:,1], hue=labels, palette=palette, legend='full', alpha=0.6, s=10)
     plt.title(title)
     plt.xlabel('PCA Component 1')
@@ -71,18 +70,15 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
 
-    # Define the feature extractor
     transform = T.MelSpectrogram(sample_rate=16000, n_mels=128)
     normalization = T.AmplitudeToDB()
 
-    # Combine transforms
     composed_transform = T.Compose([
         transform,
         normalization,
-        T.Resize((64, 64))  # Resize to match CNN input dimensions
+        T.Resize((64, 64)) 
     ])
 
-    # Initialize dataset
     dataset = LibriSpeechPhoneme(
         root="./librispeech-clean",
         url=args.url,
@@ -91,21 +87,17 @@ def main():
     )
     data_loader = DataLoader(dataset, batch_size=args.batch_size, shuffle=False, num_workers=4)
 
-    # Load model
     model = load_model(args.model, device)
 
-    # Get representations
     print("Extracting representations...")
     representations, labels = get_representations(model, device, data_loader)
     print("Extraction complete.")
 
-    # Plot t-SNE
     os.makedirs('visuals/representations', exist_ok=True)
     tsne_save_path = f'visuals/representations/tsne_librispeech_{args.url}.png'
     plot_tsne(representations, labels, f't-SNE Representation ({args.url})', tsne_save_path)
     print(f"t-SNE plot saved to {tsne_save_path}")
 
-    # Plot PCA
     pca_save_path = f'visuals/representations/pca_librispeech_{args.url}.png'
     plot_pca(representations, labels, f'PCA Representation ({args.url})', pca_save_path)
     print(f"PCA plot saved to {pca_save_path}")
